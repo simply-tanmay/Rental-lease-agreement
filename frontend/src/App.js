@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { getLeaseContract } from "./LeaseContract";
 
 function App() {
+  useEffect(() => {
+    async function initContract() {
+      const leaseContract = getLeaseContract();
+      if (leaseContract) {
+        // Now you can call functions on your contract, e.g.,
+        const landlord = await leaseContract.landlord();
+        console.log("Landlord:", landlord);
+      }
+    }
+    initContract();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Lease Agreement System</h1>
     </div>
   );
 }
