@@ -10,7 +10,17 @@ contract LeaseAgreement {
     uint256 public leaseEnd;
     bool public isActive;
 
-    constructor(address _tenant, uint256 _rentAmount, uint256 _securityDeposit, uint256 _leaseDuration) {
+    // Declare events
+    event LeaseSigned(address indexed landlord, address indexed tenant, uint256 rentAmount, uint256 leaseEnd);
+    event RentPaid(address indexed tenant, uint256 amount);
+    event LeaseTerminated(address indexed terminatedBy);
+
+    constructor(
+        address _tenant, 
+        uint256 _rentAmount, 
+        uint256 _securityDeposit, 
+        uint256 _leaseDuration
+    ) {
         landlord = msg.sender;
         tenant = _tenant;
         rentAmount = _rentAmount;
@@ -20,16 +30,25 @@ contract LeaseAgreement {
         isActive = true;
     }
 
-    function payRent() public payable {
-        require(msg.sender == tenant, "Only the tenant can pay rent");
-        require(msg.value == rentAmount, "Incorrect rent amount");
-        require(isActive, "Lease agreement is not active");
-
-        payable(landlord).transfer(msg.value);
+    // Tenant signs the lease by sending the security deposit
+    function signLease() external payable {
+        require(msg.sender == tenant, "Only tenant can sign the lease");
+        require(msg.value == securityDeposit, "Incorrect security deposit");
+        emit LeaseSigned(landlord, tenant, rentAmount, leaseEnd);
     }
 
-    function terminateLease() public {
-        require(msg.sender == landlord || msg.sender == tenant, "Only landlord or tenant can terminate");
+    // Tenant pays the rent
+    function payRent() external payable {
+        require(msg.sender == tenant, "Only tenant can pay rent");
+        require(msg.value == rentAmount, "Incorrect rent amount");
+        payable(landlord).transfer(msg.value);
+        emit RentPaid(tenant, msg.value);
+    }
+
+    // Either party can terminate the lease
+    function terminateLease() external {
+        require(msg.sender == landlord || msg.sender == tenant, "Unauthorized");
         isActive = false;
+        emit LeaseTerminated(msg.sender);
     }
 }
