@@ -1,16 +1,20 @@
 const { ethers } = require("hardhat");
 
 async function main() {
+  const [deployer] = await ethers.getSigners();
+  console.log("Deploying contract with account:", deployer.address);
+
   const LeaseAgreement = await ethers.getContractFactory("LeaseAgreement");
   const lease = await LeaseAgreement.deploy(
-    "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",         // Replace with a valid tenant address
-    ethers.parseEther("1"),            // Rent: 1 ETH
-    ethers.parseEther("2"),            // Security Deposit: 2 ETH
-    30 * 24 * 60 * 60                 // Lease Duration: 30 days in seconds
+    deployer.address, // or another valid tenant address
+    ethers.parseEther("1"),
+    ethers.parseEther("2"),
+    30 * 24 * 60 * 60
   );
-
-  await lease.deployed();
-  console.log("LeaseAgreement deployed to:", lease.address);
+  
+  await lease.waitForDeployment(); // Wait for the deployment to complete
+  const contractAddress = await lease.getAddress(); // Get the deployed contract address
+  console.log("LeaseAgreement deployed to:", contractAddress);
 }
 
 main()
