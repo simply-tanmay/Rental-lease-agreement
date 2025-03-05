@@ -1,6 +1,7 @@
 import React from 'react';
 import WalletConnection from './WalletConnection';
 import LeaseDashboard from './LeaseDashboard';
+import LeaseActions from './LeaseActions';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <WalletConnection />
         <div className="mt-8">
           <LeaseDashboard />
+        </div>
+        <div className="mt-8">
+          <LeaseActions />
         </div>
       </main>
     </div>
