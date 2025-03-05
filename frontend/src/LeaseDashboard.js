@@ -3,7 +3,8 @@ import { BrowserProvider, Contract, formatEther } from 'ethers';
 import LeaseAgreementABI from './LeaseAgreementABI.json';
 
 // Replace with your deployed contract address
-const contractAddress = "0xbD399BED192F6FD3A13460Beb923d6101610Aa90";
+import config from './config';
+const contractAddress = config.contractAddress;
 
 const LeaseDashboard = () => {
   const [leaseData, setLeaseData] = useState(null);
