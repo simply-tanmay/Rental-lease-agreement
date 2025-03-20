@@ -46,9 +46,3 @@ Welcome to the **Lease Agreement DApp**! 🎉 This project is a decentralized ap
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 - [MetaMask](https://metamask.io/) browser extension
 - [Hardhat](https://hardhat.org/) (for local blockchain testing)
-
-### Clone the Repository 📥
-
-```bash
-git clone https://github.com/yourusername/lease-agreement-dapp.git
-cd lease-agreement-dapp
