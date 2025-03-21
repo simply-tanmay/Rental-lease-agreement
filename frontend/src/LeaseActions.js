@@ -68,7 +68,7 @@ const LeaseActions = () => {
       console.error(err);
       setError("Failed to terminate lease: " + err.message);
       setStatus('');
-    }
+    } 
   };
 
   return (
