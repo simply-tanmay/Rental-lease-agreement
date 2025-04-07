@@ -14,20 +14,43 @@ contract LeaseAgreement {
     event LeaseSigned(address indexed landlord, address indexed tenant, uint256 rentAmount, uint256 leaseEnd);
     event RentPaid(address indexed tenant, uint256 amount);
     event LeaseTerminated(address indexed terminatedBy);
+    event LeaseDetailsUpdated(uint256 newRentAmount, uint256 newSecurityDeposit, uint256 newLeaseStart, uint256 newLeaseEnd);
 
     constructor(
+    address _landlord,
+    address _tenant,
+    uint256 _rentAmount,
+    uint256 _securityDeposit,
+    uint256 _leaseStart,
+    uint256 _leaseEnd
+) {
+    landlord = _landlord;
+    tenant = _tenant;
+    rentAmount = _rentAmount;
+    securityDeposit = _securityDeposit;
+    leaseStart = _leaseStart;
+    leaseEnd = _leaseEnd;
+    isActive = true; // Set active by default after initialization
+}
+
+
+    // Landlord sets lease details
+    function setLeaseDetails(
         address _tenant, 
         uint256 _rentAmount, 
         uint256 _securityDeposit, 
-        uint256 _leaseDuration
-    ) {
-        landlord = msg.sender;
+        uint256 _leaseStart, 
+        uint256 _leaseEnd
+    ) external {
+        require(msg.sender == landlord, "Only landlord can set lease details");
+        require(_leaseStart < _leaseEnd, "Lease start must be before lease end");
         tenant = _tenant;
         rentAmount = _rentAmount;
         securityDeposit = _securityDeposit;
-        leaseStart = block.timestamp;
-        leaseEnd = block.timestamp + _leaseDuration;
+        leaseStart = _leaseStart;
+        leaseEnd = _leaseEnd;
         isActive = true;
+        emit LeaseDetailsUpdated(rentAmount, securityDeposit, leaseStart, leaseEnd);
     }
 
     // Tenant signs the lease by sending the security deposit
