@@ -6,12 +6,19 @@ async function main() {
   console.log("Deploying contract with account (Landlord):", landlord.address);
   console.log("Tenant address:", tenant.address);
 
+  const rent = ethers.parseEther("1"); // Rent in ETH
+  const deposit = ethers.parseEther("2"); // Security deposit in ETH
+  const leaseStart = Math.floor(Date.now() / 1000); // Current time as UNIX timestamp
+  const leaseEnd = leaseStart + 30 * 24 * 60 * 60; // Lease duration of 30 days
+
   const LeaseAgreement = await ethers.getContractFactory("LeaseAgreement");
   const lease = await LeaseAgreement.deploy(
-    tenant.address, // Use a different account as the tenant
-    ethers.parseEther("1"),
-    ethers.parseEther("2"),
-    30 * 24 * 60 * 60
+    landlord.address, // Landlord's address
+    tenant.address,   // Tenant's address
+    rent,
+    deposit,
+    leaseStart,
+    leaseEnd
   );
 
   await lease.waitForDeployment();
