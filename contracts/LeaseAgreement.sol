@@ -30,7 +30,7 @@ contract LeaseAgreement {
     securityDeposit = _securityDeposit;
     leaseStart = _leaseStart;
     leaseEnd = _leaseEnd;
-    isActive = true; // Set active by default after initialization
+    isActive = true; 
 }
 
 
