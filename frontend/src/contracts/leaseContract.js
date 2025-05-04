@@ -1,7 +1,8 @@
 import { ethers } from "ethers";
 import LeaseAgreementABI from "../LeaseAgreementABI.json"; // Must be a pure ABI array
 
-const CONTRACT_ADDRESS = "0xYourActualContractAddress"; // <- Replace with your deployed address
+// Use the deployed contract address from your local network
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Default Hardhat local network address
 
 export const getLeaseContract = (signerOrProvider) => {
   return new ethers.Contract(CONTRACT_ADDRESS, LeaseAgreementABI, signerOrProvider);
