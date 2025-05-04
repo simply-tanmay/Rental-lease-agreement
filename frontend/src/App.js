@@ -1,44 +1,34 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
-import WalletConnection from './WalletConnection';
-import LeaseDashboard from './LeaseDashboard';
-import LeaseActions from './LeaseActions';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
 import LeaseManager from './pages/LeaseManager';
-
-function Home() {
-  const navigate = useNavigate();
-
-  return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-      <header className="w-full max-w-4xl bg-white shadow p-6 rounded-md mb-4 flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-800">Lease Agreement DApp</h1>
-        <button
-          onClick={() => navigate('/manage')}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-        >
-          Manage Lease
-        </button>
-      </header>
-      <main className="w-full max-w-4xl">
-        <WalletConnection />
-        <div className="mt-8">
-          <LeaseDashboard />
-        </div>
-        <div className="mt-8">
-          <LeaseActions />
-        </div>
-      </main>
-    </div>
-  );
-}
+import StarryBackground from './components/StarryBackground';
+import Parallax from './components/Parallax';
+import WalletConnection from './components/WalletConnection';
+import './styles/global.css';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/manage" element={<LeaseManager />} />
-      </Routes>
+      <div className="parallax-container">
+        <StarryBackground />
+        
+        <nav className="container py-6 fixed top-0 left-0 right-0 z-50 bg-[rgba(10,10,10,0.95)] backdrop-blur border-b border-white/10">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold">Smart Leaser</h1>
+            <WalletConnection />
+          </div>
+        </nav>
+
+        <Parallax speed={0.2}>
+          <div className="pt-28">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/manage" element={<LeaseManager />} />
+            </Routes>
+          </div>
+        </Parallax>
+      </div>
     </Router>
   );
 }
