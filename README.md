@@ -1,4 +1,4 @@
-# Lease Agreement DApp 🚀🏠
+# SMART Leaser! 🚀🏠
 
 Welcome to the **Lease Agreement DApp**! 🎉 This project is a decentralized application (dApp) built with smart contracts 📝 and a React frontend ⚛️ that automates lease agreements on the blockchain 🔐. Enjoy a seamless, transparent, and secure experience for managing rental contracts!
 
